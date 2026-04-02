@@ -2,7 +2,9 @@ const express = require("express");
 const {
   registerUser,
   loginUser,
-  getAllUsers
+  getAllUsers,
+  updateUser,
+  deleteUser
 } = require("../controllers/user.controller");
 
 const router = express.Router();
@@ -81,5 +83,60 @@ router.post("/login", loginUser);
  *         description: List of users
  */
 router.get("/", getAllUsers);
+
+/**
+ * @swagger
+ * /users/{id}:
+ *   patch:
+ *     summary: Update user
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               fullName:
+ *                 type: string
+ *                 example: Kasun Perera
+ *               email:
+ *                 type: string
+ *                 example: kasun.new@gmail.com
+ *               password:
+ *                 type: string
+ *                 example: 12345678
+ *               role:
+ *                 type: string
+ *                 example: ADMIN
+ *     responses:
+ *       200:
+ *         description: User updated
+ */
+router.patch("/:id", updateUser);
+
+/**
+ * @swagger
+ * /users/{id}:
+ *   delete:
+ *     summary: Delete user
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: User deleted
+ */
+router.delete("/:id", deleteUser);
 
 module.exports = router;

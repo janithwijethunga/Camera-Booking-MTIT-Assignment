@@ -91,9 +91,34 @@ async function updateBookingStatus(req, res) {
   }
 }
 
+async function deleteBooking(req, res) {
+  try {
+    const booking = await Booking.findByIdAndDelete(req.params.id);
+
+    if (!booking) {
+      return res.status(404).json({
+        success: false,
+        message: "Booking not found"
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Booking deleted successfully"
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to delete booking",
+      error: error.message
+    });
+  }
+}
+
 module.exports = {
   createBooking,
   getAllBookings,
   getBookingById,
-  updateBookingStatus
+  updateBookingStatus,
+  deleteBooking
 };

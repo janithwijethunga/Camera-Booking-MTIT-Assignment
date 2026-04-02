@@ -3,7 +3,8 @@ const {
   createBooking,
   getAllBookings,
   getBookingById,
-  updateBookingStatus
+  updateBookingStatus,
+  deleteBooking
 } = require("../controllers/booking.controller");
 
 const router = express.Router();
@@ -110,5 +111,23 @@ router.get("/:id", getBookingById);
  *         description: Booking status updated
  */
 router.patch("/:id/status", updateBookingStatus);
+
+/**
+ * @swagger
+ * /bookings/{id}:
+ *   delete:
+ *     summary: Delete booking
+ *     tags: [Bookings]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Booking deleted
+ */
+router.delete("/:id", deleteBooking);
 
 module.exports = router;

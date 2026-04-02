@@ -3,7 +3,8 @@ const {
   createCamera,
   getAllCameras,
   getCameraById,
-  updateCamera
+  updateCamera,
+  deleteCamera
 } = require("../controllers/camera.controller");
 
 const router = express.Router();
@@ -123,5 +124,23 @@ router.get("/:id", getCameraById);
  *         description: Camera updated
  */
 router.patch("/:id", updateCamera);
+
+/**
+ * @swagger
+ * /cameras/{id}:
+ *   delete:
+ *     summary: Delete camera by ID
+ *     tags: [Cameras]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Camera deleted
+ */
+router.delete("/:id", deleteCamera);
 
 module.exports = router;

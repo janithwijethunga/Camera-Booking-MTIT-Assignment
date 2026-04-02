@@ -87,9 +87,34 @@ async function updateCamera(req, res) {
   }
 }
 
+async function deleteCamera(req, res) {
+  try {
+    const camera = await Camera.findByIdAndDelete(req.params.id);
+
+    if (!camera) {
+      return res.status(404).json({
+        success: false,
+        message: "Camera not found"
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Camera deleted successfully"
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to delete camera",
+      error: error.message
+    });
+  }
+}
+
 module.exports = {
   createCamera,
   getAllCameras,
   getCameraById,
-  updateCamera
+  updateCamera,
+  deleteCamera
 };
