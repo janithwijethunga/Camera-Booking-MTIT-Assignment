@@ -1,38 +1,37 @@
 const express = require("express");
 const { createProxyMiddleware } = require("http-proxy-middleware");
+const { fixRequestBody } = require("http-proxy-middleware");
 
 const router = express.Router();
 
+const createServiceProxy = (target) =>
+  createProxyMiddleware({
+    target,
+    changeOrigin: true,
+    pathRewrite: (path, req) => req.originalUrl,
+    on: {
+      proxyReq: fixRequestBody
+    }
+  });
+
 router.use(
   "/users",
-  createProxyMiddleware({
-    target: process.env.USER_SERVICE_URL,
-    changeOrigin: true
-  })
+  createServiceProxy(process.env.USER_SERVICE_URL)
 );
 
 router.use(
   "/cameras",
-  createProxyMiddleware({
-    target: process.env.CAMERA_SERVICE_URL,
-    changeOrigin: true
-  })
+  createServiceProxy(process.env.CAMERA_SERVICE_URL)
 );
 
 router.use(
   "/bookings",
-  createProxyMiddleware({
-    target: process.env.BOOKING_SERVICE_URL,
-    changeOrigin: true
-  })
+  createServiceProxy(process.env.BOOKING_SERVICE_URL)
 );
 
 router.use(
   "/employees",
-  createProxyMiddleware({
-    target: process.env.EMPLOYEE_SERVICE_URL,
-    changeOrigin: true
-  })
+  createServiceProxy(process.env.EMPLOYEE_SERVICE_URL)
 );
 
 module.exports = router;

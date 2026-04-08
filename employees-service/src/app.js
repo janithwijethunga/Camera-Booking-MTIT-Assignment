@@ -20,6 +20,10 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/api-docs-json", (req, res) => {
+  res.status(200).json(swaggerSpec);
+});
+
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/", routes);
 
