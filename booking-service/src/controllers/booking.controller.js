@@ -7,13 +7,13 @@ async function createBooking(req, res) {
     res.status(201).json({
       success: true,
       message: "Booking created successfully",
-      data: booking
+      data: booking,
     });
   } catch (error) {
     res.status(500).json({
       success: false,
       message: "Failed to create booking",
-      error: error.message
+      error: error.message,
     });
   }
 }
@@ -25,13 +25,13 @@ async function getAllBookings(req, res) {
     res.status(200).json({
       success: true,
       count: bookings.length,
-      data: bookings
+      data: bookings,
     });
   } catch (error) {
     res.status(500).json({
       success: false,
       message: "Failed to fetch bookings",
-      error: error.message
+      error: error.message,
     });
   }
 }
@@ -43,19 +43,19 @@ async function getBookingById(req, res) {
     if (!booking) {
       return res.status(404).json({
         success: false,
-        message: "Booking not found"
+        message: "Booking not found",
       });
     }
 
     res.status(200).json({
       success: true,
-      data: booking
+      data: booking,
     });
   } catch (error) {
     res.status(500).json({
       success: false,
       message: "Failed to fetch booking",
-      error: error.message
+      error: error.message,
     });
   }
 }
@@ -67,26 +67,26 @@ async function updateBookingStatus(req, res) {
     const booking = await Booking.findByIdAndUpdate(
       req.params.id,
       { status },
-      { new: true }
+      { new: true },
     );
 
     if (!booking) {
       return res.status(404).json({
         success: false,
-        message: "Booking not found"
+        message: "Booking not found",
       });
     }
 
     res.status(200).json({
       success: true,
       message: "Booking status updated successfully",
-      data: booking
+      data: booking,
     });
   } catch (error) {
     res.status(500).json({
       success: false,
       message: "Failed to update booking status",
-      error: error.message
+      error: error.message,
     });
   }
 }
@@ -98,19 +98,19 @@ async function deleteBooking(req, res) {
     if (!booking) {
       return res.status(404).json({
         success: false,
-        message: "Booking not found"
+        message: "Booking not found",
       });
     }
 
     res.status(200).json({
       success: true,
-      message: "Booking deleted successfully"
+      message: "Booking deleted successfully",
     });
   } catch (error) {
     res.status(500).json({
       success: false,
       message: "Failed to delete booking",
-      error: error.message
+      error: error.message,
     });
   }
 }
@@ -120,5 +120,5 @@ module.exports = {
   getAllBookings,
   getBookingById,
   updateBookingStatus,
-  deleteBooking
+  deleteBooking,
 };
